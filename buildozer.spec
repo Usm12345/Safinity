@@ -81,4 +81,3 @@ android.logcat_filters = *:S python:D
 # (bool) Copy library instead of making a libpymodules.so
 android.copy_libs = 1
 
-p4a.local_recipes = .recipes
