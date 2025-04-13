@@ -48,7 +48,6 @@ jobs:
 
       - name: 📲 Start APK Build (initial setup)
         run: |
-         buildozer android clean
          buildozer android debug --log_level=2 || true
 
       - name: 🩹 Patch libffi configure.ac
