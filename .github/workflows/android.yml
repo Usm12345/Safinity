@@ -49,3 +49,4 @@ jobs:
         with:
           name: Safinity-APK
           path: bin/*.apk
+
