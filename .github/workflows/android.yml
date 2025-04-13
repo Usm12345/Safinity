@@ -14,12 +14,11 @@ jobs:
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v3
-        
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.9"  # ⬅️ Matches buildozer.spec python3==3.9.3
 
       - name: 🐳 Set up dependencies
         run: |
@@ -31,22 +30,25 @@ jobs:
       - name: 📦 Install Buildozer
         run: |
           pip install --upgrade pip
-          pip install cython==0.29.36 buildozer==1.5.0
+          pip install cython==0.29.33 buildozer==1.5.0  # ⬅️ Matches your spec
 
       - name: 🧱 Install tomli manually
         run: |
           pip install tomli
           mkdir -p .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
-          cp -r $(python3 -c "import tomli, os; print(os.path.dirname(tomli.__file__))")/* .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
-      - name: Cache .buildozer and .gradle
+          cp -r $(python3 -c "import tomli, os; print(os.path.dirname(tomli.__file__))")/* \
+            .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
+
+      - name: 💾 Cache .buildozer and .gradle
         uses: actions/cache@v3
         with:
           path: |
-               ~/.gradle/caches
-               ~/.gradle/wrapper
-               .buildozer
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            .buildozer
           key: ${{ runner.os }}-buildozer-${{ hashFiles('**/buildozer.spec') }}
-      - name: 📲 Build APK
+
+      - name: 🏗️ Build APK
         run: |
           buildozer android debug
 
