@@ -1,3 +1,17 @@
-- name: 🧹 Clean Buildozer
-  run: |
-    buildozer android clean
+name: Build Safinity APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 🔧 Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧹 Clean Buildozer
+        run: |
+         buildozer android clean
