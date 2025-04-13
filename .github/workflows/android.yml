@@ -18,7 +18,7 @@ jobs:
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"  # ⬅️ Matches buildozer.spec python3==3.9.3
+          python-version: "3.8.0"  # ⬅️ Matches buildozer.spec python3==3.9.3
 
       - name: 🐳 Set up dependencies
         run: |
@@ -27,14 +27,17 @@ jobs:
             libffi-dev libssl-dev libpng-dev libjpeg-dev libfreetype6-dev \
             autoconf automake libtool pkg-config zlib1g-dev
 
+      - name: ☕ Set JAVA_HOME
+        run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))" >> $GITHUB_ENV
+
       - name: 📦 Install Buildozer
         run: |
           pip install --upgrade pip
-          pip install cython==0.29.33 buildozer==1.5.0  # ⬅️ Matches your spec
+          pip install cython==0.29.33 buildozer==1.5.0
 
       - name: 🧱 Install tomli manually
         run: |
-          pip install tomli
+          pip install tomli==2.0.1
           mkdir -p .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
           cp -r $(python3 -c "import tomli, os; print(os.path.dirname(tomli.__file__))")/* \
             .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
