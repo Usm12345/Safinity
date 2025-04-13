@@ -46,9 +46,23 @@ jobs:
 
      
 
-      - name: 📲 Build APK
+      - name: 📲 Start APK Build (initial setup)
         run: |
-          buildozer android debug --log_level=2
+         buildozer android clean
+         buildozer android debug --log_level=2 || true
+
+      - name: 🩹 Patch libffi configure.ac
+        run: |
+          sudo apt-get install autoconf automake libtool -y
+          find . -type f -name configure.ac | grep libffi | while read f; do
+            echo "Patching: $f"
+            cd $(dirname "$f")
+            autoupdate
+          done
+
+      - name: 🔁 Retry APK Build after patch
+        run: |
+         buildozer android debug --log_level=2
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
