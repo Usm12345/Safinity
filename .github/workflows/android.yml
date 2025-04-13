@@ -39,9 +39,6 @@ jobs:
             buildozer init
           fi
 
-      - name: 🔧 Pre-configure Buildozer (Optional Cache Fix)
-        run: |
-          buildozer android update
 
       - name: 📲 Build APK (Ignore 1st Fail if Needed)
         run: |
