@@ -33,7 +33,7 @@ icon.filename = Safinity/logo.png
 presplash.filename = Safinity/logo.png
 
 # (list) Application requirements
-requirements = python3,kivy,kivymd,sqlalchemy,bcrypt,python-dotenv,plyer,pyjnius,android,setuptools,cython,pillow,requests,twilio,tomli,libffi
+requirements = python3,kivy,kivymd,sqlalchemy,bcrypt,python-dotenv,plyer,pyjnius,android,setuptools,cython,pillow,requests,twilio,tomli,libffi,libtool
 
 # (list) Supported orientations
 orientation = portrait
