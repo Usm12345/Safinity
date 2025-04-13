@@ -40,25 +40,7 @@ jobs:
             exit 1
           fi
 
-      - name: 🧩 Patch libffi (fix autotools error)
-        run: |
-          # Ensure p4a environment gets built
-          buildozer android clean
-          # Trigger p4a to fetch dependencies (including libffi)
-          buildozer android update
-          
-          # Find libffi directory and fix obsolete macros
-          LIBFFI_DIR=$(find .buildozer/android/platform/build-*/ -type d -name "libffi" | head -n 1)
-          if [ -n "$LIBFFI_DIR" ]; then
-            echo "Found libffi dir: $LIBFFI_DIR"
-            cd "$LIBFFI_DIR"
-            autoupdate
-            libtoolize
-            aclocal
-            autoheader
-            automake --add-missing
-            autoconf
-          fi
+     
 
       - name: 📲 Build APK
         run: |
