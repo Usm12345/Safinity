@@ -44,7 +44,8 @@ jobs:
           buildozer android debug
 
       - name: 📤 Upload APK
+        if: success()  # Ensure upload happens only if the build is successful
         uses: actions/upload-artifact@v3
         with:
           name: Safinity-APK
-          path: bin/*.apk
+          path: bin/debug/*.apk  # This will match the APK generated in debug mode
