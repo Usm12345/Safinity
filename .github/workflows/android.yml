@@ -45,7 +45,7 @@ jobs:
 
       - name: 📤 Upload APK
         if: success()  # Ensure upload happens only if the build is successful
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Safinity-APK
           path: bin/debug/*.apk  # This will match the APK generated in debug mode
