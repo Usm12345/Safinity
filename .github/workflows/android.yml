@@ -18,15 +18,14 @@ jobs:
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.10"
 
       - name: 🐳 Set up dependencies
         run: |
           sudo apt update
           sudo apt install -y zip unzip openjdk-17-jdk git python3-pip \
             libffi-dev libssl-dev libpng-dev libjpeg-dev libfreetype6-dev \
-            autoconf automake libtool pkg-config zlib1g-dev \
-            libncurses5 libncurses5-dev libtinfo5
+            autoconf automake libtool pkg-config zlib1g-dev
 
       - name: 📦 Install Buildozer
         run: |
@@ -44,8 +43,7 @@ jobs:
           buildozer android debug
 
       - name: 📤 Upload APK
-        if: success()  # Ensure upload happens only if the build is successful
         uses: actions/upload-artifact@v4
         with:
           name: Safinity-APK
-          path: bin/debug/*.apk  # This will match the APK generated in debug mode
+          path: bin/*.apk
