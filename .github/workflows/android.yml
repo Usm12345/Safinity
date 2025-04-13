@@ -40,17 +40,8 @@ jobs:
           fi
 
 
-      - name: 📲 Build APK (Ignore 1st Fail if Needed)
-        run: |
-          set +e
-          buildozer android debug --log_level=2
-          STATUS=$?
-          set -e
-          if [ "$STATUS" -ne 0 ]; then
-            echo "First build failed as expected (libffi etc). Retrying..."
-            rm -rf .buildozer/android/platform/build-armeabi-v7a/libffi
-            buildozer android debug --log_level=2
-          fi
+      - name: 📲 Build APK
+        run: buildozer android debug --log_level=2
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
