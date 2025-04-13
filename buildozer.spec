@@ -33,7 +33,7 @@ icon.filename = Safinity/logo.png
 presplash.filename = Safinity/logo.png
 
 # (list) Application requirements
-requirements = python3==3.8.0,hostpython3==3.8.0,kivy==2.1.0,kivymd==1.1.1,sqlalchemy==2.0.23,bcrypt==3.2.2,python-dotenv==1.0.0,plyer==2.1.0,pyjnius==1.5.0,android==0.9,setuptools==58.2.0,cython==0.29.36,pillow,requests,twilio,tomli
+requirements = python3,hostpython3,kivy==2.1.0,kivymd==1.1.1,sqlalchemy==2.0.23,bcrypt==3.2.2,python-dotenv==1.0.0,plyer==2.1.0,pyjnius==1.5.0,android==0.9,setuptools,cython==0.29.36,pillow,requests,twilio,tomli
 
 # (list) Supported orientations
 orientation = portrait
@@ -64,7 +64,7 @@ android.accept_sdk_license = True
 android.archs = armeabi-v7a, arm64-v8a
 
 # (str) python-for-android branch to use
-p4a.branch = develop
+#p4a.branch = develop
 
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
