@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   build:
     name: 🔧 Build Android APK
@@ -20,26 +24,46 @@ jobs:
         with:
           python-version: "3.8"
 
-      - name: 🐳 Set up dependencies
+      - name: 💾 Cache Buildozer directories
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.buildozer
+            .buildozer
+          key: ${{ runner.os }}-buildozer-${{ hashFiles('**/buildozer.spec') }}
+
+      - name: 🧹 Clean old build artifacts
+        run: |
+          rm -rf .buildozer bin
+
+      - name: 📦 Install required system packages
         run: |
           sudo apt update
-          sudo apt install -y zip unzip openjdk-17-jdk git python3-pip \
-            libffi-dev libssl-dev libpng-dev libjpeg-dev libfreetype6-dev \
-            autoconf automake libtool pkg-config zlib1g-dev python3-dev \
-            libgl1-mesa-dev libgles2-mesa-dev
+          sudo apt install -y git zip unzip openjdk-8-jdk python3-pip autoconf libtool pkg-config \
+            zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev \
+            build-essential python3 python3-dev ffmpeg libsdl2-dev libsdl2-image-dev \
+            libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev \
+            libavcodec-dev libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
+            libsqlite3-dev sqlite3 bzip2 libbz2-dev openssl libgdbm-dev libgdbm-compat-dev \
+            liblzma-dev libreadline-dev uuid-dev libffi6
 
-      - name: 📦 Install Buildozer
+      - name: 🐳 Set up Buildozer and dependencies
         run: |
           pip install --upgrade pip
           pip install cython==0.29.36 buildozer==1.5.0
 
-      - name: 🧱 Install tomli manually
+      - name: 🧱 Manually install tomli (Buildozer fix)
         run: |
           pip install tomli
           mkdir -p .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
           cp -r $(python3 -c "import tomli, os; print(os.path.dirname(tomli.__file__))")/* .buildozer/android/platform/build-armeabi-v7a_arm64-v8a/build/other_builds/hostpython3/desktop/hostpython3/native-build/Lib/site-packages/
 
-     
+      - name: ✅ Check for buildozer.spec
+        run: |
+          if [ ! -f buildozer.spec ]; then
+            echo "❌ Missing buildozer.spec file!"
+            exit 1
+          fi
 
       - name: 📲 Build APK
         run: |
