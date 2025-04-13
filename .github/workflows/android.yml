@@ -26,7 +26,7 @@ jobs:
           sudo apt install -y zip unzip openjdk-17-jdk git python3-pip \
             libffi-dev libssl-dev libpng-dev libjpeg-dev libfreetype6-dev \
             autoconf automake libtool pkg-config zlib1g-dev python3-dev \
-            libgl1-mesa-dev libgles2-mesa-dev m4 
+            libgl1-mesa-dev libgles2-mesa-dev m4
 
       - name: 📦 Install Buildozer
         run: |
@@ -40,6 +40,26 @@ jobs:
             exit 1
           fi
 
+      - name: 🧩 Patch libffi (fix autotools error)
+        run: |
+          # Ensure p4a environment gets built
+          buildozer android clean
+          # Trigger p4a to fetch dependencies (including libffi)
+          buildozer android update
+          
+          # Find libffi directory and fix obsolete macros
+          LIBFFI_DIR=$(find .buildozer/android/platform/build-*/ -type d -name "libffi" | head -n 1)
+          if [ -n "$LIBFFI_DIR" ]; then
+            echo "Found libffi dir: $LIBFFI_DIR"
+            cd "$LIBFFI_DIR"
+            autoupdate
+            libtoolize
+            aclocal
+            autoheader
+            automake --add-missing
+            autoconf
+          fi
+
       - name: 📲 Build APK
         run: |
           buildozer android debug --log_level=2
@@ -49,4 +69,3 @@ jobs:
         with:
           name: Safinity-APK
           path: bin/*.apk
-
