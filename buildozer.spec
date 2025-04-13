@@ -54,6 +54,9 @@ android.ndk_api = 21
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
 log_level = 2
 
+osx.python_version= 3.8.0
+
+osx.kivy_version= 1.9.1
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True
 
