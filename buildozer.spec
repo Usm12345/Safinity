@@ -33,7 +33,7 @@ icon.filename = Safinity/logo.png
 presplash.filename = Safinity/logo.png
 
 # (list) Application requirements
-requirements = python3==3.9.3,kivy==2.3.0,kivymd==1.1.1,sqlalchemy==2.0.23,bcrypt==4.0.1,python-dotenv==1.0.0,plyer==2.1.0,pyjnius==1.5.0,android==0.9,cython==0.29.33,pillow,requests,twilio
+requirements = python3==3.8.0,hostpython3==3.8.0,kivy==2.1.0,kivymd==1.1.1,sqlalchemy==2.0.23,bcrypt==3.2.2,python-dotenv==1.0.0,plyer==2.1.0,pyjnius==1.5.0,android==0.9,setuptools==58.2.0,cython==0.29.36,pillow,requests,twilio,tomli
 
 # (list) Supported orientations
 orientation = portrait
@@ -49,6 +49,7 @@ android.api = 33
 
 # (int) Minimum API your APK / AAB will support.
 android.minapi = 21
+android.ndk_api = 21
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
 log_level = 2
