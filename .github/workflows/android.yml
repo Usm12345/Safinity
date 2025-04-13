@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: 🔧 Build Android APK
-    runs-on: ubuntu-22.04  # Fixed indentation here
+
 
     steps:
       - name: 📥 Checkout Repository
@@ -18,7 +18,7 @@ jobs:
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8.0"  # Ensure Python 3.8.0 works with Ubuntu 22.04
+          python-version: "3.8"  # Ensure Python 3.8.0 works with Ubuntu 22.04
 
       - name: 🐳 Set up dependencies
         run: |
