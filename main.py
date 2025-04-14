@@ -16,12 +16,6 @@ import string
 import json
 import traceback
 from utils.android_permissions import AndroidPermissions
-
-# Add the project root directory to Python path
-project_root = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, project_root)
-resource_add_path(project_root)
-
 # Import screens
 from screens.homepage.home_screen import HomeScreen
 from screens.login.login_screen import LoginScreen
