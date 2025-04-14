@@ -15,7 +15,7 @@ package.domain = org.safinity
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,json,ttf,env
+source.include_exts = py,png,jpg,kv,atlas,json,ttf
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,images/*,fonts/*,screens/**/*,models/**/*,utils/**/*,services/**/*,migrations/**/*
@@ -43,10 +43,10 @@ android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,CAME
 
 # (int) Target Android API, should be as high as possible.
 android.api = 33
+
+# (int) Minimum API your APK / AAB will support.
 android.minapi = 21
-android.ndk = 23b
-android.sdk = 33
-android.arch = arm64-v8a
+android.ndk_api = 21
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
 log_level = 2
