@@ -11,13 +11,15 @@ package.name = safinity
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.safinity.app
 
+entrypoint = main.py
+
 # (str) Source code where the main.py live
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts =py,png,jpg,kv,json
 # (list) List of inclusions using pattern matching
-source.include_patterns = assets/*,screens/**/*,models/**/*,utils/**/*,migrations/**/*,~/**/*
+source.include_patterns = assets/*,screens/**/*,models/**/*,utils/**/*,migrations/**/*
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -81,9 +83,9 @@ p4a.branch = develop
 
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
-
+android.entrypoint = org.kivy.android.PythonActivity
 # (str) Android entry point
-entrypoint = main.py
+
 
 # (str) Android app theme, default is ok for Kivy-based app
 #android.apptheme = @android:style/Theme.NoTitleBar
