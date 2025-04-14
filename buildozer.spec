@@ -15,7 +15,7 @@ package.domain = org.safinity
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,ttf,json
+source.include_exts = py,png,jpg,kv,atlas,json,ttf,env
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,images/*,fonts/*,screens/**/*,models/**/*,utils/**/*,services/**/*,migrations/**/*
