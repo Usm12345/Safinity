@@ -83,7 +83,7 @@ p4a.branch = develop
 android.allow_backup = True
 
 # (str) Android entry point
-android.entrypoint = main.py
+entrypoint = main.py
 
 # (str) Android app theme, default is ok for Kivy-based app
 #android.apptheme = @android:style/Theme.NoTitleBar
