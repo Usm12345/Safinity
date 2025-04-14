@@ -11,10 +11,11 @@ package.name = safinity
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.safinity.app
 
-entrypoint = main.py
+
 
 # (str) Source code where the main.py live
 source.dir = .
+source.main = main.py
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts =py,png,jpg,kv,json
