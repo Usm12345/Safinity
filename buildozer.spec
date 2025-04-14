@@ -15,7 +15,7 @@ package.domain = org.safinity.app
 
 # (str) Source code where the main.py live
 source.dir = .
-source.main = main.py
+source.main = screens/login/login_screen.py
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts =py,png,jpg,kv,json
