@@ -399,10 +399,14 @@ class SafinityApp(App):
 if __name__ == '__main__':
     try:
         print("Starting Safinity application...")
+        from kivy.logger import Logger
+        Logger.info('App: Starting application')
         load_dotenv()
+        Logger.info('App: Environment loaded')
         app = SafinityApp()
-        print("Running application...")
+        Logger.info('App: App instance created')
         app.run()
+        Logger.info('App: App running')
     except Exception as e:
-        print(f"Fatal error: {str(e)}")
-        print(traceback.format_exc())
+        Logger.error(f'App: Fatal error: {str(e)}')
+        Logger.error(traceback.format_exc())
