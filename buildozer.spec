@@ -9,14 +9,13 @@ target = android
 package.name = safinity
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.safinity
+package.domain = org.safinity.app
 
 # (str) Source code where the main.py live
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,json,ttf
-
+source.include_exts =py,png,jpg,kv,json
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,screens/**/*,models/**/*,utils/**/*,migrations/**/*,~/**/*
 
@@ -27,7 +26,7 @@ source.include_patterns = assets/*,screens/**/*,models/**/*,utils/**/*,migration
 version = 0.1
 
 icon.filename = assets/logo.png
-presplash.filename = assets/logo.png
+#presplash.filename = assets/logo.png
 
 # (list) Application requirements
 requirements = 
@@ -84,14 +83,15 @@ p4a.branch = develop
 android.allow_backup = True
 
 # (str) Android entry point
-android.entrypoint = org.kivy.android.PythonActivity
+android.entrypoint = main.py
 
 # (str) Android app theme, default is ok for Kivy-based app
-android.apptheme = @android:style/Theme.NoTitleBar
+#android.apptheme = @android:style/Theme.NoTitleBar
 
 # (bool) Android logcat filters to use
-android.logcat_filters = *:S python:D
+#android.logcat_filters = *:S python:D
 
 # (bool) Copy library instead of making a libpymodules.so
 android.copy_libs = 1
-
+# If using threading or multiprocessing
+android.allow_cleartext = true
