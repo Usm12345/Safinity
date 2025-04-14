@@ -17,11 +17,11 @@ import json
 import traceback
 from utils.android_permissions import AndroidPermissions
 
+# Add the project root directory to Python path
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_root)
+resource_add_path(project_root)
 
- # Add the project root directory to Python path
- project_root = os.path.dirname(os.path.abspath(__file__))
- sys.path.insert(0, project_root)
- resource_add_path(project_root)
 # Import screens
 from screens.homepage.home_screen import HomeScreen
 from screens.login.login_screen import LoginScreen
@@ -311,7 +311,16 @@ class SafinityApp(App):
             print(f"Error checking permissions: {str(e)}")
             return False
             
-   
+    def set_permission(self, permission_type, granted=True):
+        """Set a specific permission status"""
+        try:
+            permissions = self.read_user_data('permissions') or {}
+            permissions[permission_type] = granted
+            self.update_user_data('permissions', permissions)
+            return True
+        except Exception as e:
+            print(f"Error setting permission: {str(e)}")
+            return False
 
     def generate_verification_code(self):
         """Generate a 6-digit verification code"""
