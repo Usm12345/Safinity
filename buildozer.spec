@@ -67,7 +67,7 @@ p4a.branch = develop
 android.allow_backup = True
 
 # (str) Android entry point
-android.entrypoint = screens.welcome.welcome_screen
+android.entrypoint = screens.login.login_screen
 
 # (str) Android app theme, default is ok for Kivy-based app
 android.apptheme = @android:style/Theme.NoTitleBar
