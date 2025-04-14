@@ -64,3 +64,5 @@ jobs:
         with:
           name: Safinity-APK
           path: bin/*.apk
+      - name: 📲 Check APK
+        run: buildozer android logcat         
