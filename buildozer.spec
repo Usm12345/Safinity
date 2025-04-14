@@ -30,7 +30,7 @@ icon.filename = assets/logo.png
 presplash.filename = assets/logo.png
 
 # (list) Application requirements
-requirements = python3==3.9.3,kivy==2.3.0,kivymd==1.1.1,python-dotenv,plyer,requests,tomli,pillow,setuptools,cython==0.29.36,pyjnius,android,sqlalchemy,bcrypt,cython,pillow,twilio
+requirements = python3==3.9.3,kivy==2.3.0,kivymd==1.1.1,sqlalchemy==2.0.23,bcrypt==4.0.1,python-dotenv==1.0.0,plyer==2.1.0,pyjnius==1.5.0,android==0.9,cython==0.29.33,pillow,requests,twilio
 
 # (list) Supported orientations
 orientation = portrait
