@@ -26,11 +26,11 @@ source.include_patterns = assets/*,images/*,fonts/*,screens/**/*,models/**/*,uti
 # (str) Application versioning
 version = 0.1
 
-icon.filename = logo.png
-presplash.filename = logo.png
+icon.filename = assets/logo.png
+presplash.filename = assets/logo.png
 
 # (list) Application requirements
-requirements = python3,kivy==2.1.0,kivymd==1.1.1,python-dotenv,plyer,requests,tomli,pillow,setuptools==58.2.0,cython==0.29.36
+requirements = python3,kivy==2.1.0,kivymd==1.1.1,python-dotenv,plyer,requests,tomli,pillow,setuptools==58.2.0,cython==0.29.36,pyjnius==1.5.0
 
 # (list) Supported orientations
 orientation = portrait
