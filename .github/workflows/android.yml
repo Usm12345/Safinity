@@ -42,6 +42,7 @@ jobs:
         run: |
          sudo apt-get update
          sudo apt-get install -y autoconf libtool automake m4
+         
       - name: Install dependencies
         run: |
          sudo apt-get update
@@ -53,6 +54,19 @@ jobs:
          libffi-dev \
          build-essential \
          pkg-config
+         
+      - name: Create ~/.safinity/user_data.json with dummy user
+        run: |
+          mkdir -p ~/.safinity
+          echo '[
+            {
+              "email": "f2021376083@umt.edu.pk",
+              "phone_number": "+923336507022",
+              "password": "alpha123",
+              "country": "Pakistan",
+              "created_at": "2025-03-15 00:26:42.738115"
+            }
+          ]' > ~/.safinity/user_data.json         
    
 
 
