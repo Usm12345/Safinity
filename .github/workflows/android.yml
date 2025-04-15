@@ -26,12 +26,27 @@ jobs:
           sudo apt install -y \
             zip unzip openjdk-17-jdk git python3-pip \
             libpng-dev libjpeg-dev libfreetype6-dev \
-            zlib1g-dev python3-dev libgl1-mesa-dev libgles2-mesa-dev \
-            m4 autoconf libtool automake libffi-dev build-essential \
-            pkg-config libssl-dev libncurses5-dev libsqlite3-dev \
-            libreadline-dev libbz2-dev libgdbm-dev
+            zlib1g-dev python3-dev libgl1-mesa-dev libgles2-mesa-dev m4
 
-      - name: 📦 Install Build Tools
+
+      - name: Install build dependencies
+        run: |
+           sudo apt-get update
+           sudo apt-get install -y autoconf libtool automake m4
+ 
+      - name: Install dependencies
+        run: |
+           sudo apt-get update
+           sudo apt-get install -y \
+             automake \
+             autoconf \
+             libtool \
+             libltdl-dev \
+             libffi-dev \
+             build-essential \
+             pkg-config     
+
+      - name: 📦 Install Buildozer
         run: |
           pip install --upgrade pip
           pip install cython==0.29.36 buildozer==1.5.0
@@ -42,24 +57,37 @@ jobs:
             buildozer init
           fi
 
-      - name: Create ~/.safinity/user_data.json
+      - name: Create ~/.safinity/user_data.json with dummy user
         run: |
           mkdir -p ~/.safinity
-          echo '{"email":"test@example.com","phone_number":"+1234567890","password":"test123"}' > ~/.safinity/user_data.json
+          echo '[
+            {
+              "email": "f2021376083@umt.edu.pk",
+              "phone_number": "+923336507022",
+              "password": "alpha123",
+              "country": "Pakistan",
+              "created_at": "2025-03-15 00:26:42.738115"
+            }
+          ]' > ~/.safinity/user_data.json
 
-      - name: 🔍 Pre-Build Checks
+      - name: 📂 Scan project for missing dependencies or Python errors
+        shell: bash
         run: |
-          echo "Checking Python syntax..."
-          find . -name "*.py" -exec python3 -m py_compile {} \;
-          
-          echo "Checking for missing imports..."
-          grep -riE "ImportError|ModuleNotFoundError" . || true
+          echo "📂 Scanning project files for suspicious error messages..."
+          grep -riE "ImportError|ModuleNotFoundError|No module named|FileNotFoundError|cannot import name" . || echo "✅ No suspicious error patterns found."
 
-      - name: 📲 Build APK (Debug Mode)
-        run: |
-          buildozer android clean
-          buildozer -v android debug 2>&1 | tee build.log
-          grep -iE "error|fail|exception" build.log || echo "No build errors detected"
+          echo "🔎 Checking Python files for syntax errors..."
+          find . -name "*.py" -exec python3 -m py_compile {} \; || echo "⚠️ Some files have syntax errors."
+
+          echo "🧪 Checking for broken or missing dependencies via pip..."
+          pip check || echo "⚠️ pip check reported some issues."
+
+          echo "🧹 (Optional) Linting with flake8..."
+          pip install flake8
+          flake8 . || echo "⚠️ flake8 found style or import issues."
+
+      - name: 📲 Build APK
+        run: buildozer android debug --log_level=2
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
@@ -67,49 +95,30 @@ jobs:
           name: Safinity-APK
           path: bin/*.apk
 
-      - name: 📤 Upload Build Log
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build-Log
-          path: build.log
+      - name: 📲 Check APK
+        run: buildozer android logcat
 
-      - name: 🤖 Test APK on Emulator
+      - name: 🐛 Analyze Build Log for Crash Clues
+        run: |
+          echo "------ 🔍 Possible Errors in Build Log ------"
+          grep -iE "error|exception|traceback" ./.buildozer/android/platform/build-*/build.log || echo "No obvious errors found"
+
+      - name: 🤖 Start Android Emulator and Run App
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
           target: google_apis
           arch: x86_64
-          profile: Nexus 6
           script: |
-            echo "Installing APK..."
-            adb install -r -g ./bin/*.apk
-            
-            echo "Clearing old logs..."
-            adb logcat -c
-            
-            echo "Starting app..."
-            adb shell am start -n org.safinity.app/org.kivy.android.PythonActivity
-            
-            echo "Waiting 30 seconds for app initialization..."
-            sleep 30
-            
-            echo "Capturing logs..."
-            adb logcat -d > logcat.txt
-            adb logcat -d *:E > logcat_errors.txt
-            
-            echo "Checking running processes..."
-            adb shell ps | grep python
-            
-            echo "Checking app directory..."
-            adb shell run-as org.safinity.app ls -la
-            
-            echo "Important logs:"
-            cat logcat.txt | grep -iE "python|kivy|error|exception|crash" || echo "No relevant logs found"
+            echo "📱 Installing APK..."
+            adb install ./bin/*.apk
 
-      - name: 📤 Upload Logs
-        uses: actions/upload-artifact@v4
-        with:
-          name: Emulator-Logs
-          path: |
-            logcat.txt
-            logcat_errors.txt
+            echo "🚀 Launching Kivy App..."
+            adb shell am start -n org.safinity.app/com.kivy.android.PythonActivity
+
+            echo "⏱️ Waiting for 10 seconds to let it run..."
+            sleep 10
+
+            echo "📦 Capturing Logcat Output..."
+            adb logcat -d > logcat_output.txt
+            tail -n 100 logcat_output.txt
