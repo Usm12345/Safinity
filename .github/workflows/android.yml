@@ -109,22 +109,13 @@ jobs:
           target: google_apis
           arch: x86_64
           script: |
-            echo "⏳ Waiting for emulator to fully boot..."
-            boot_completed=""
-            until [[ "$boot_completed" == "1" ]]; do
-              boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
-              echo "Waiting... (boot_completed=$boot_completed)"
-              sleep 5
-            done
-            echo "✅ Emulator booted!"
+            echo "📱 Installing APK..."
+            adb install ./bin/*.apk
 
-            echo "📦 Installing APK (without streaming)..."
-            adb push ./bin/*.apk /data/local/tmp/safinity.apk
-            adb shell pm install -r /data/local/tmp/safinity.apk
+            echo "🚀 Launching Kivy App..."
+            # No need for specific activity launch, the Kivy app will automatically run
+            adb shell am start -n org.safinity.app/com.kivy.android.PythonActivity
 
-            echo "🚀 Launching app..."
-            adb shell monkey -p org.safinity.app.safinity -c android.intent.category.LAUNCHER 1
-            
             echo "⏱️ Waiting for 10 seconds to let it run..."
             sleep 10
 
