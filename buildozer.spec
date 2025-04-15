@@ -62,7 +62,7 @@
  
  # (int) Target Android API, should be as high as possible.
  android.api = 34
- 
+ android.ndk = 25b
  # (int) Minimum API your APK / AAB will support.
  android.minapi = 21
 
@@ -90,7 +90,20 @@
  android.allow_backup = True
  android.entrypoint = org.kivy.android.PythonActivity
  # (str) Android entry point
- 
+ android.build_mode = debug
+ android.accept_sdk_license = True
+ android.gradle_dependencies = com.android.support:support-compat:28.0.0
+
+ # Add build tools version
+ android.build_tools_version = 33.0.0
+
+# Add NDK specific options
+ android.ndk_api = 21
+
+# Add these before android.copy_libs
+ android.enable_androidx = True
+ android.androidx.enable = True
+
  
  # (str) Android app theme, default is ok for Kivy-based app
  android.apptheme = @android:style/Theme.NoTitleBar
