@@ -61,8 +61,8 @@
  android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,CAMERA,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,READ_CONTACTS,WRITE_CONTACTS,BLUETOOTH,BLUETOOTH_ADMIN,BLUETOOTH_ADVERTISE,BLUETOOTH_CONNECT,BLUETOOTH_SCAN,BATTERY_STATS
  
  # (int) Target Android API, should be as high as possible.
- android.api = 34
- android.ndk = 25b
+ android.api = 33
+ 
  # (int) Minimum API your APK / AAB will support.
  android.minapi = 21
 
@@ -78,32 +78,15 @@
  
  # (list) The Android archs to build for
  android.archs = armeabi-v7a, arm64-v8a
-
-
- android.debug = True
- android.logcat_filters = *:S python:D
+ 
  # (str) python-for-android branch to use
- p4a.branch = master
- android.add_adb_to_path = True
- android.verbose_logs = True
+ p4a.branch = develop
+ 
  # (bool) enables Android auto backup feature (Android API >=23)
  android.allow_backup = True
  android.entrypoint = org.kivy.android.PythonActivity
  # (str) Android entry point
- android.build_mode = debug
- android.accept_sdk_license = True
- android.gradle_dependencies = com.android.support:support-compat:28.0.0
-
- # Add build tools version
- android.build_tools_version = 33.0.0
-
-# Add NDK specific options
- android.ndk_api = 21
-
-# Add these before android.copy_libs
- android.enable_androidx = True
- android.androidx.enable = True
-
+ 
  
  # (str) Android app theme, default is ok for Kivy-based app
  android.apptheme = @android:style/Theme.NoTitleBar
