@@ -9,16 +9,16 @@
  package.name = safinity
  
  # (str) Package domain (needed for android/ios packaging)
- package.domain = org.safinity.app
+ package.domain = org.safinity
  
  
  
  # (str) Source code where the main.py live
  source.dir = .
- source.main = main.py
+ 
  
  # (list) Source files to include (let empty to include all the files)
- source.include_exts =py,png,jpg,kv,json
+ source.include_exts =py,png,jpg,kv,atlas,ttf,json
  # (list) List of inclusions using pattern matching
  source.include_patterns = assets/*,screens/**/*,models/**/*,utils/**/*,migrations/**/*
  
@@ -32,24 +32,7 @@
  #presplash.filename = assets/logo.png
  
  # (list) Application requirements
- requirements = 
-     python3,
-     kivy==2.3.0,
-     kivymd==1.1.1,
-     python-dotenv,
-     plyer,
-     requests,
-     pillow,
-     pyjnius,
-     android,
-     sqlite3,
-     openssl,
-     certifi,
-     chardet,
-     idna,
-     urllib3,
-     bcrypt,
-     twilio
+ requirements = python3==3.9.3,kivy==2.3.0,kivymd==1.1.1,sqlalchemy==2.0.23,bcrypt==4.0.1,python-dotenv==1.0.0,plyer==2.1.0,pyjnius==1.5.0,android==0.9,cython==0.29.33,pillow,requests,twilio
  
  # (list) Supported orientations
  orientation = portrait
@@ -65,7 +48,7 @@
  
  # (int) Minimum API your APK / AAB will support.
  android.minapi = 21
- android.ndk_api = 21
+
  
  # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
  log_level = 2
@@ -77,7 +60,7 @@
  android.accept_sdk_license = True
  
  # (list) The Android archs to build for
- android.archs = armeabi-v7a, arm64-v8a, x86_64
+ android.archs = armeabi-v7a, arm64-v8a
  
  # (str) python-for-android branch to use
  p4a.branch = develop
@@ -89,12 +72,8 @@
  
  
  # (str) Android app theme, default is ok for Kivy-based app
- #android.apptheme = @android:style/Theme.NoTitleBar
- 
- # (bool) Android logcat filters to use
- android.logcat_filters = *:S python:D
+ android.apptheme = @android:style/Theme.NoTitleBar
  
  # (bool) Copy library instead of making a libpymodules.so
  android.copy_libs = 1
- # If using threading or multiprocessing
- android.allow_cleartext = true
+
