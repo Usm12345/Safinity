@@ -77,7 +77,7 @@ android.private_storage = True
 android.accept_sdk_license = True
 
 # (list) The Android archs to build for
-android.archs = x86_64
+android.archs = armeabi-v7a, arm64-v8a, x86_64
 
 # (str) python-for-android branch to use
 p4a.branch = develop
@@ -92,7 +92,7 @@ android.entrypoint = org.kivy.android.PythonActivity
 #android.apptheme = @android:style/Theme.NoTitleBar
 
 # (bool) Android logcat filters to use
-#android.logcat_filters = *:S python:D
+android.logcat_filters = *:S python:D
 
 # (bool) Copy library instead of making a libpymodules.so
 android.copy_libs = 1
