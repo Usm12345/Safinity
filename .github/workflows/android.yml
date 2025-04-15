@@ -26,8 +26,25 @@ jobs:
           sudo apt install -y \
             zip unzip openjdk-17-jdk git python3-pip \
             libpng-dev libjpeg-dev libfreetype6-dev \
-            zlib1g-dev python3-dev libgl1-mesa-dev libgles2-mesa-dev m4 \
-            autoconf libtool automake
+            zlib1g-dev python3-dev libgl1-mesa-dev libgles2-mesa-dev m4
+
+
+      - name: Install build dependencies
+        run: |
+           sudo apt-get update
+           sudo apt-get install -y autoconf libtool automake m4
+ 
+      - name: Install dependencies
+        run: |
+           sudo apt-get update
+           sudo apt-get install -y \
+             automake \
+             autoconf \
+             libtool \
+             libltdl-dev \
+             libffi-dev \
+             build-essential \
+             pkg-config     
 
       - name: 📦 Install Buildozer
         run: |
