@@ -37,11 +37,18 @@
       kivy==2.3.0,
       kivymd==1.1.1,
       python-dotenv,
+      setuptools,
       plyer,
+       appdirs>=1.4.4,
+    colorama>=0.3.3,
+     build,
+    toml,
+    packaging,
+    setuptools,
+      jinja2,
       requests,
       pillow,
       pyjnius,
-      android,
       sqlite3,
       openssl,
       certifi,
@@ -80,7 +87,7 @@
  android.archs = armeabi-v7a, arm64-v8a
  
  # (str) python-for-android branch to use
- p4a.branch = develop
+ p4a.dir = /media/atharnaveed/NewVolume/Work/Safinity/python-for-android
  
  # (bool) enables Android auto backup feature (Android API >=23)
  android.allow_backup = True

@@ -1,0 +1,3 @@
+# dev-requirements.txt
+buildozer==1.5.0
+cython==0.29.33

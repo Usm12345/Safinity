@@ -2,12 +2,13 @@ from kivy.utils import platform
 from functools import partial
 from jnius import autoclass
 from jnius import autoclass
-from android.permissions import request_permissions, Permission
+from utils.android_permissions import AndroidPermissions 
 
 class PermissionHandler:
     """Handle Android permissions using android.permissions"""
     
     def __init__(self):
+        self.android = AndroidPermissions()
         self.permission_states = {}
         self._permission_map = {
             'storage': [
@@ -76,7 +77,7 @@ class PermissionHandler:
             return granted
         
         # Use android.permissions module to request permissions
-        request_permissions(
+        self.android.request_permission(
             permissions,
             partial(on_permissions_callback, permissions)
         )
