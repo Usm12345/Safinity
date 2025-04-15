@@ -69,11 +69,15 @@ jobs:
             }
           ]' > ~/.safinity/user_data.json         
 
-      - name: 🔍 Scan for Missing Dependencies or Errors
+      - name: 🧪 Scan for Missing Dependencies
         run: |
           echo "📂 Scanning project files for missing dependencies or errors..."
           grep -riE "ImportError|ModuleNotFoundError|No module named|FileNotFoundError|cannot import name" . || echo "✅ No obvious dependency issues found."
 
+      - name: 🧪 Python Syntax Check
+        run: |
+          echo "🔎 Checking Python files for syntax errors..."
+          find . -name "*.py" -exec python3 -m py_compile {} \; || echo "⚠️ Some files have syntax errors."
 
       - name: 📲 Build APK
         run: buildozer android debug --log_level=2
