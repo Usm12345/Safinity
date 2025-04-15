@@ -85,12 +85,14 @@ jobs:
         run: |
           echo "------ 🔍 Possible Errors in Build Log ------"
           grep -iE "error|exception|traceback" ./.buildozer/android/platform/build-arm64-v8a_*/build.log || echo "No obvious errors found"
-      - name: 🧪 Analyze Logcat Output for Crashes
-        run: |
-          echo "------ 🔍 Checking Logcat for Runtime Errors ------"
-          LOGCAT_OUTPUT=$(mktemp)
-          buildozer android logcat > "$LOGCAT_OUTPUT" &
-          LOGCAT_PID=$!
-          sleep 30  # give logcat time to gather crash logs
-          kill $LOGCAT_PID
-          grep -iE "fatal|exception|error|traceback" "$LOGCAT_OUTPUT" || echo "✅ No critical errors found in logcat"          
+      - name: 🤖 Start Android Emulator and Run App
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+         api-level: 30
+         target: google_apis
+         arch: x86_64
+         script: |
+           adb install ./bin/*.apk
+           adb shell monkey -p org.safinity.app -c android.intent.category.LAUNCHER 1
+           sleep 20
+           adb logcat -d | grep -iE "error|exception|traceback|fatal"
