@@ -80,3 +80,8 @@ jobs:
           path: bin/*.apk
       - name: 📲 Check APK
         run: buildozer android logcat         
+        
+      - name: 🐛 Analyze Build Log for Crash Clues
+        run: |
+          echo "------ 🔍 Possible Errors in Build Log ------"
+          grep -iE "error|exception|traceback" ./.buildozer/android/platform/build-arm64-v8a_*/build.log || echo "No obvious errors found"
