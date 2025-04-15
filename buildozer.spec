@@ -79,7 +79,7 @@
  # (list) The Android archs to build for
  android.archs = armeabi-v7a, arm64-v8a
 
- android.copy_libs
+
  android.debug = True
  android.logcat_filters = *:S python:D
  # (str) python-for-android branch to use
