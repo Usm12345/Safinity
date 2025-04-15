@@ -77,7 +77,7 @@ android.private_storage = True
 android.accept_sdk_license = True
 
 # (list) The Android archs to build for
-android.archs = armeabi-v7a, arm64-v8a
+android.archs = x86_64
 
 # (str) python-for-android branch to use
 p4a.branch = develop
