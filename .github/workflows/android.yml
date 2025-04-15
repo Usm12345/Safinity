@@ -124,7 +124,10 @@ jobs:
 
             echo "🚀 Launching app..."
             adb shell monkey -p org.safinity.app.safinity -c android.intent.category.LAUNCHER 1
-            sleep 20
+            
+            echo "⏱️ Waiting for 10 seconds to let it run..."
+            sleep 10
 
-            echo "🧪 Checking logs for errors..."
-            adb logcat -d | grep -iE "error|exception|traceback|fatal" || echo "No runtime errors found."
+            echo "📦 Capturing Logcat Output..."
+            adb logcat -d > logcat_output.txt
+            tail -n 100 logcat_output.txt
