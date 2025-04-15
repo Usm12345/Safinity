@@ -33,7 +33,7 @@
  
  # (list) Application requirements
  requirements = 
-      python3,
+      python3,alembic==1.13.1,
       kivy==2.3.0,
       kivymd==1.1.1,
       python-dotenv,
