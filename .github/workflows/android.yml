@@ -69,15 +69,21 @@ jobs:
             }
           ]' > ~/.safinity/user_data.json         
 
-      - name: 🧪 Scan for Missing Dependencies
+      - name: 📂 Scan project for missing dependencies or Python errors
+        shell: bash
         run: |
-          echo "📂 Scanning project files for missing dependencies or errors..."
-          grep -riE "ImportError|ModuleNotFoundError|No module named|FileNotFoundError|cannot import name" . || echo "✅ No obvious dependency issues found."
+         echo "📂 Scanning project files for suspicious error messages..."
+         grep -riE "ImportError|ModuleNotFoundError|No module named|FileNotFoundError|cannot import name" . || echo "✅ No suspicious error patterns found."
 
-      - name: 🧪 Python Syntax Check
-        run: |
-          echo "🔎 Checking Python files for syntax errors..."
-          find . -name "*.py" -exec python3 -m py_compile {} \; || echo "⚠️ Some files have syntax errors."
+         echo "🔎 Checking Python files for syntax errors..."
+         find . -name "*.py" -exec python3 -m py_compile {} \; || echo "⚠️ Some files have syntax errors."
+
+         echo "🧪 Checking for broken or missing dependencies via pip..."
+         pip check || echo "⚠️ pip check reported some issues."
+
+         echo "🧹 (Optional) Linting with flake8..."
+         pip install flake8
+         flake8 . || echo "⚠️ flake8 found style or import issues."
 
       - name: 📲 Build APK
         run: buildozer android debug --log_level=2
