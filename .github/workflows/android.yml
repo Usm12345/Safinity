@@ -26,7 +26,8 @@ jobs:
           sudo apt install -y \
             zip unzip openjdk-17-jdk git python3-pip \
             libpng-dev libjpeg-dev libfreetype6-dev \
-            zlib1g-dev python3-dev libgl1-mesa-dev libgles2-mesa-dev m4
+            zlib1g-dev python3-dev libgl1-mesa-dev libgles2-mesa-dev m4 \
+            autoconf libtool automake
 
       - name: 📦 Install Buildozer
         run: |
@@ -39,23 +40,6 @@ jobs:
             buildozer init
           fi
 
-      - name: Install build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y autoconf libtool automake m4
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            automake \
-            autoconf \
-            libtool \
-            libltdl-dev \
-            libffi-dev \
-            build-essential \
-            pkg-config
-
       - name: Create ~/.safinity/user_data.json with dummy user
         run: |
           mkdir -p ~/.safinity
@@ -67,23 +51,23 @@ jobs:
               "country": "Pakistan",
               "created_at": "2025-03-15 00:26:42.738115"
             }
-          ]' > ~/.safinity/user_data.json         
+          ]' > ~/.safinity/user_data.json
 
       - name: 📂 Scan project for missing dependencies or Python errors
         shell: bash
         run: |
-         echo "📂 Scanning project files for suspicious error messages..."
-         grep -riE "ImportError|ModuleNotFoundError|No module named|FileNotFoundError|cannot import name" . || echo "✅ No suspicious error patterns found."
+          echo "📂 Scanning project files for suspicious error messages..."
+          grep -riE "ImportError|ModuleNotFoundError|No module named|FileNotFoundError|cannot import name" . || echo "✅ No suspicious error patterns found."
 
-         echo "🔎 Checking Python files for syntax errors..."
-         find . -name "*.py" -exec python3 -m py_compile {} \; || echo "⚠️ Some files have syntax errors."
+          echo "🔎 Checking Python files for syntax errors..."
+          find . -name "*.py" -exec python3 -m py_compile {} \; || echo "⚠️ Some files have syntax errors."
 
-         echo "🧪 Checking for broken or missing dependencies via pip..."
-         pip check || echo "⚠️ pip check reported some issues."
+          echo "🧪 Checking for broken or missing dependencies via pip..."
+          pip check || echo "⚠️ pip check reported some issues."
 
-         echo "🧹 (Optional) Linting with flake8..."
-         pip install flake8
-         flake8 . || echo "⚠️ flake8 found style or import issues."
+          echo "🧹 (Optional) Linting with flake8..."
+          pip install flake8
+          flake8 . || echo "⚠️ flake8 found style or import issues."
 
       - name: 📲 Build APK
         run: buildozer android debug --log_level=2
@@ -95,7 +79,7 @@ jobs:
           path: bin/*.apk
 
       - name: 📲 Check APK
-        run: buildozer android logcat         
+        run: buildozer android logcat
 
       - name: 🐛 Analyze Build Log for Crash Clues
         run: |
@@ -113,7 +97,6 @@ jobs:
             adb install ./bin/*.apk
 
             echo "🚀 Launching Kivy App..."
-            # No need for specific activity launch, the Kivy app will automatically run
             adb shell am start -n org.safinity.app/com.kivy.android.PythonActivity
 
             echo "⏱️ Waiting for 10 seconds to let it run..."
